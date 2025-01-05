@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="quick-survey.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@700&display=swap" rel="stylesheet">
+
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+        <script src="lib/tmi.min.js"></script>
+    </head>
+    <body>
+        <div x-data="quickSurvey" class="vote-container" x-show="enabled && totalCount >= options.minVotes">
+            <template x-for="(option, i) in voteOptions">
+                <div class="vote" x-bind="voteContainer"></div>
+            </template>
+        </div>
+        <script src="quick-survey.js"></script>
+    </body>
+</html>
