@@ -9,8 +9,11 @@
     </head>
     <body>
         <div x-data="quickSurvey" class="vote-container" x-show="enabled && totalCount >= options.minVotes">
-            <template x-for="(option, i) in voteOptions">
-                <div class="vote" x-bind="voteContainer"></div>
+            <template x-for="option in voteOptions">
+                <div class="vote" x-bind="voteBar"></div>
+            </template>
+            <template x-for="position in dividerPositions">
+                <div class="divider" :style="{ left: `${position}%` }"></div>
             </template>
         </div>
         <script src="quick-survey.js"></script>

@@ -11,6 +11,16 @@ document.addEventListener('alpine:init', () => {
 
         voteOptions: [],
 
+        get dividerPositions() {
+            const positions = [];
+
+            for (let i = 1; i < this.maxVote; i++) {
+                positions.push(i / this.maxVote * 100);
+            }
+
+            return positions;
+        },
+
         get minVote() {
             return Object.keys(this.votes).reduce((acc, v) => acc === null || acc > v ? v : acc, null);
         },
@@ -117,11 +127,16 @@ document.addEventListener('alpine:init', () => {
                 || user.username.localeCompare(this.options.channel, 'en-US', { sensitivity: 'accent' }) === 0;
         },
 
-        voteContainer: {
-            ':class': '{ [`vote-${option}`]: true, hidden: !votes[option], first: minVote == option, last: maxVote == option }',
+        voteBar: {
+            ':class': `{
+                [\`vote-\${option}\`]: true,
+                hidden: !votes[option],
+                first: minVote == option,
+                last: maxVote == option
+            }`,
             ':style': '{ width: `${(votes[option] / totalCount * 100)}%` }',
             'x-text': 'votes[option]'
-        }
+        },
 
     }));
 });

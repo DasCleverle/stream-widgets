@@ -23,6 +23,7 @@ body {
 }
 
 .vote-container {
+    position: relative;
     display: flex;
     flex-direction: row;
     height: 100vh;
@@ -78,6 +79,17 @@ body {
     background-color: var(--qs-color-vote-4);
 }
 
-*, ::before, ::after {
+.divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: var(--qs-border-width);
+    background-color: var(--qs-border-color);
+}
+
+*,
+::before,
+::after {
     box-sizing: border-box;
 }
