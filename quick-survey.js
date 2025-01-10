@@ -37,7 +37,7 @@ document.addEventListener('alpine:init', () => {
         handleMessage(_, user, message) {
             this.handleManagerAction(user, message);
 
-            if (!this.enabled || this.users.has(user['display-name'])) {
+            if (!this.enabled || this.users.has(user.username)) {
                 return;
             }
 
@@ -52,7 +52,7 @@ document.addEventListener('alpine:init', () => {
             }
 
             this.timeout = setTimeout(() => this.reset(), this.options.timeout * 1000);
-            this.users.add(user['display-name']);
+            this.users.add(user.username);
 
             if (!this.votes[vote]) {
                 this.votes[vote] = 1;
@@ -105,8 +105,8 @@ document.addEventListener('alpine:init', () => {
 
         isManager(user) {
             return user.mod
-                || user['display-name'] === 'DasCleverle'
-                || user['display-name'] === this.options.channel;
+                || user.username === 'dascleverle'
+                || user.username.localeCompare(this.options.channel, 'en-US', { sensitivity: 'accent' }) === 0;
         },
 
         voteContainer: {
