@@ -11,6 +11,14 @@ document.addEventListener('alpine:init', () => {
 
         voteOptions: [],
 
+        get minVote() {
+            return Object.keys(this.votes).reduce((acc, v) => acc === null || acc > v ? v : acc, null);
+        },
+
+        get maxVote() {
+            return Object.keys(this.votes).reduce((acc, v) => acc === null || acc < v ? v : acc, null);
+        },
+
         get totalCount() {
             return Object.values(this.votes).reduce((acc, v) => acc + v, 0);
         },
@@ -110,7 +118,7 @@ document.addEventListener('alpine:init', () => {
         },
 
         voteContainer: {
-            ':class': '{ [`vote-${option}`]: true, hidden: !votes[option] }',
+            ':class': '{ [`vote-${option}`]: true, hidden: !votes[option], first: minVote == option, last: maxVote == option }',
             ':style': '{ width: `${(votes[option] / totalCount * 100)}%` }',
             'x-text': 'votes[option]'
         }

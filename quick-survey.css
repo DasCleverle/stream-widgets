@@ -1,6 +1,9 @@
 :root {
     --qs-padding: 0;
-    --qs-border: 5px solid black;
+    --qs-border-width: 5px;
+    --qs-border-style: solid;
+    --qs-border-color: black;
+    --qs-border: var(--qs-border-width) var(--qs-border-style) var(--qs-border-color);
     --qs-border-radius: 30px;
     --qs-font-size: 50vh;
     --qs-font-color: white;
@@ -17,10 +20,6 @@ body {
     font-family: "Funnel Display", serif;
     font-weight: 700;
     font-style: normal;
-}
-
-.hidden {
-    display: none;
 }
 
 .vote-container {
@@ -45,14 +44,18 @@ body {
 
 }
 
-.vote:first-of-type:not(.hidden) {
+.hidden {
+    display: none !important;
+}
+
+.first {
     border-left: var(--qs-border);
 
     border-top-left-radius: var(--qs-border-radius);
     border-bottom-left-radius: var(--qs-border-radius);
 }
 
-.vote:last-of-type:not(.hidden), .vote:not(.hidden):has(+ .hidden) {
+.last {
     border-right: var(--qs-border);
 
     border-top-right-radius: var(--qs-border-radius);
