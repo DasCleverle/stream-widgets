@@ -17,9 +17,16 @@
 body {
     margin: 0;
 
-    font-family: "Funnel Display", serif;
+    font-family: "Funnel Sans", serif;
     font-weight: 700;
     font-style: normal;
+}
+
+.error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .vote-container {
@@ -28,14 +35,14 @@ body {
     flex-direction: row;
     height: 100vh;
     padding: var(--qs-padding);
+
+    font-size: var(--qs-font-size);
 }
 
 .vote {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    font-size: 50vh;
 
     transition: width 250ms ease-out;
     color: white;

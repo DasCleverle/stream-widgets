@@ -11,6 +11,8 @@ document.addEventListener('alpine:init', () => {
 
         voteOptions: [],
 
+        error: null,
+
         get dividerPositions() {
             const positions = [];
 
@@ -35,6 +37,11 @@ document.addEventListener('alpine:init', () => {
 
         init() {
             this.options = this.getOptions();
+
+            if (!this.options.channel) {
+                this.error = "No channel provided";
+                return;
+            }
 
             for (let i = 1; i <= this.options.voteOptions; i++) {
                 this.voteOptions.push(i);
