@@ -3,7 +3,6 @@ document.addEventListener('alpine:init', () => {
 
         enabled: true,
 
-        lastVote: null,
         users: new Set(),
         votes: {},
 
@@ -76,8 +75,13 @@ document.addEventListener('alpine:init', () => {
                 clearTimeout(this.timeout);
             }
 
-            this.timeout = setTimeout(() => this.reset(), this.options.timeout * 1000);
-            this.users.add(user.username);
+            if (this.options.timeout !== 0) {
+                this.timeout = setTimeout(() => this.reset(), this.options.timeout * 1000);
+            }
+
+            if (!this.options.debug) {
+                this.users.add(user.username);
+            }
 
             if (!this.votes[vote]) {
                 this.votes[vote] = 1;
@@ -108,7 +112,6 @@ document.addEventListener('alpine:init', () => {
         },
 
         reset() {
-            this.lastVote = null;
             this.users.clear();
             this.votes = {};
 
@@ -124,7 +127,8 @@ document.addEventListener('alpine:init', () => {
                 channel: params.get('channel'),
                 timeout: parseInt(params.get('timeout') ?? params.get('to') ?? 30),
                 minVotes: parseInt(params.get('minVotes') ?? params.get('minvotes') ?? 3),
-                voteOptions: parseInt(params.get('voteOptions') ?? params.get('voteoptions') ?? 2)
+                voteOptions: parseInt(params.get('voteOptions') ?? params.get('voteoptions') ?? 2),
+                debug: params.get('debug') === 'true'
             };
         },
 
