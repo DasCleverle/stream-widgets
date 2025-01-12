@@ -1,4 +1,5 @@
 document.addEventListener('alpine:init', () => {
+    Chart.defaults.color = '#000';
     Chart.defaults.font.family = 'Funnel Sans';
     Chart.defaults.font.size = 20;
 
