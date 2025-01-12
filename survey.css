@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+
+    font-family: "Funnel Sans", serif;
+    font-style: normal;
+}
+
+.container {
+    display: grid;
+
+    grid-template-columns: 100%;
+    grid-template-rows: 15vh 85vh;
+
+    width: 100%;
+    height: 100vh;
+}
+
+.error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.title {
+    font-size: 10vh;
+    justify-self: center;
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}
