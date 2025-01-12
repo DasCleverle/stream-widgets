@@ -5,6 +5,28 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('survey', () => {
 
         let voteChart = null;
+        const colors = [
+            '#1f55a6',
+            '#2b3022',
+            '#209380',
+            '#ba2749',
+            '#350b32',
+            '#bab70f',
+            '#66617c',
+            '#720d66',
+            '#09ea72',
+            '#afaaae',
+            '#57b74e',
+            '#896d9e',
+            '#a56d47',
+            '#6d5a47',
+            '#2abfc1',
+            '#c466a6',
+            '#040504',
+            '#d10412',
+            '#5b595a',
+            '#92a075',
+        ];
 
         return {
 
@@ -45,7 +67,10 @@ document.addEventListener('alpine:init', () => {
                         datasets: [
                             {
                                 label: 'Votes',
-                                data: []
+                                data: [],
+                                backgroundColor(value) {
+                                    return colors[value.index % colors.length];
+                                }
                             }
                         ],
                         labels: []
