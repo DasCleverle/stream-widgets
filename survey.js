@@ -166,7 +166,9 @@ document.addEventListener('alpine:init', () => {
                         break;
 
                     case '!resetvote':
-                        this.reset();
+                        this.votes = new Array(this.voteOptions.length);
+                        this.votes.fill(0);
+                        this.updateChart();
                         break;
 
                     case '!votetitle':
