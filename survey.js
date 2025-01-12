@@ -4,24 +4,24 @@ document.addEventListener('alpine:init', () => {
 
     Alpine.data('survey', () => {
 
-        let chart = null;
+        let voteChart = null;
 
         return {
 
             enabled: false,
 
             get voteOptions() {
-                return chart.data.labels;
+                return voteChart.data.labels;
             },
             set voteOptions(value) {
-                chart.data.labels = value;
+                voteChart.data.labels = value;
             },
 
             get votes() {
-                return chart.data.datasets[0].data;
+                return voteChart.data.datasets[0].data;
             },
             set votes(value) {
-                chart.data.datasets[0].data = value;
+                voteChart.data.datasets[0].data = value;
             },
 
             title: null,
@@ -38,7 +38,8 @@ document.addEventListener('alpine:init', () => {
                     return;
                 }
 
-                chart = new Chart(this.$refs.canvas, {
+                voteChart = new Chart(this.$refs.canvas, {
+                    plugins: [ChartDataLabels],
                     type: 'bar',
                     data: {
                         datasets: [
@@ -52,23 +53,23 @@ document.addEventListener('alpine:init', () => {
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        layout: {
+                            padding: {
+                                top: 30
+                            }
+                        },
                         plugins: {
                             legend: { display: false },
-                            tooltip: { enabled: false }
+                            tooltip: { enabled: false },
+                            datalabels: {
+                                anchor: 'end',
+                                align: 'top'
+                            }
                         },
                         scales: {
                             y: {
+                                display: false,
                                 beginAtZero: true,
-                                ticks: {
-                                    callback: function(value) {
-                                        // Only show tick marks for integers
-                                        if (Math.round(value) !== value) {
-                                            return null;
-                                        }
-
-                                        return value;
-                                    }
-                                }
                             },
                             x: {
                                 grid: { display: false }
@@ -89,7 +90,7 @@ document.addEventListener('alpine:init', () => {
             },
 
             updateChart(mode) {
-                this.$nextTick(() => chart.update(mode));
+                this.$nextTick(() => voteChart.update(mode));
             },
 
             handleMessage(_, user, message) {
@@ -218,6 +219,7 @@ document.addEventListener('alpine:init', () => {
             },
 
             reset() {
+                this.enabled = false;
                 this.users.clear();
                 this.votes = [];
                 this.voteOptions = [];
