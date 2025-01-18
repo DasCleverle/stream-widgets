@@ -16,6 +16,20 @@
             <div class="chart-container">
                 <canvas x-ref="canvas"></canvas>
             </div>
+            <div class="stats">
+                <div class="stats-item">
+                    <div>Votes</div>
+                    <div x-text="totalCount"></div>
+                </div>
+                <div class="stats-item">
+                    <div>Median</div>
+                    <div x-text="median"></div>
+                </div>
+                <div class="stats-item">
+                    <div>Mean</div>
+                    <div x-text="mean"></div>
+                </div>
+            </div>
         </div>
         <script src="survey.js"></script>
     </body>

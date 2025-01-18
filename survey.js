@@ -47,6 +47,10 @@ document.addEventListener('alpine:init', () => {
                 voteChart.data.datasets[0].data = value;
             },
 
+            totalCount: 0,
+            median: 0,
+            mean: 0,
+
             title: null,
 
             users: new Set(),
@@ -115,7 +119,25 @@ document.addEventListener('alpine:init', () => {
                 this.client.on('message', this.handleMessage.bind(this));
             },
 
-            updateChart(mode) {
+            update(mode) {
+                const totalCount = this.votes.reduce((acc, v) => acc + v, 0);
+                const middle = Math.floor(totalCount / 2);
+                const medianList = this.votes.flatMap((vote, index) => {
+                    const array = new Array(vote);
+                    array.fill(index);
+                    return array;
+                });
+
+                const meanIndex = this.votes.reduce((acc, vote, index) => acc + vote * (index + 1), 0) / totalCount - 1;
+                const mean = this.voteOptions[Math.round(meanIndex)];
+
+                this.totalCount = totalCount;
+                this.median = this.voteOptions[medianList[middle]] ?? '-';
+                this.mean = (parseInt(mean)
+                    ? meanIndex + parseInt(this.voteOptions[0])
+                    : mean
+                ) ?? '-';
+
                 this.$nextTick(() => voteChart.update(mode));
             },
 
@@ -141,7 +163,7 @@ document.addEventListener('alpine:init', () => {
                 }
 
                 this.votes[index]++;
-                this.updateChart();
+                this.update();
             },
 
             handleManagerAction(user, message) {
@@ -169,7 +191,7 @@ document.addEventListener('alpine:init', () => {
                     case '!resetvote':
                         this.votes = new Array(this.voteOptions.length);
                         this.votes.fill(0);
-                        this.updateChart();
+                        this.update();
                         break;
 
                     case '!votetitle':
@@ -178,7 +200,7 @@ document.addEventListener('alpine:init', () => {
                         }
 
                         this.title = args.slice(1).join(' ');
-                        this.updateChart();
+                        this.update();
                         break;
                 }
             },
@@ -199,7 +221,7 @@ document.addEventListener('alpine:init', () => {
                 this.votes.fill(0);
                 this.title = title;
 
-                this.updateChart();
+                this.update();
             },
 
             parseVoteOptions(options) {
@@ -253,7 +275,7 @@ document.addEventListener('alpine:init', () => {
                 this.voteOptions = [];
                 this.title = null;
 
-                this.updateChart();
+                this.update();
             },
 
             getOptions() {
