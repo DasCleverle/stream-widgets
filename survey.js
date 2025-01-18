@@ -3,6 +3,10 @@ document.addEventListener('alpine:init', () => {
     Chart.defaults.font.family = 'Funnel Sans';
     Chart.defaults.font.size = 20;
 
+    const numberFormat = new Intl.NumberFormat(undefined, {
+        maximumFractionDigits: 2
+    });
+
     Alpine.data('survey', () => {
 
         let voteChart = null;
@@ -134,7 +138,7 @@ document.addEventListener('alpine:init', () => {
                 this.totalCount = totalCount;
                 this.median = this.voteOptions[medianList[middle]] ?? '-';
                 this.mean = (parseInt(mean)
-                    ? meanIndex + parseInt(this.voteOptions[0])
+                    ? numberFormat.format(meanIndex + parseInt(this.voteOptions[0]))
                     : mean
                 ) ?? '-';
 
