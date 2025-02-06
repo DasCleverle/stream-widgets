@@ -92,15 +92,18 @@ document.addEventListener('alpine:init', () => {
         },
 
         handleManagerAction(user, message) {
-            if (!this.isManager(user)) {
+            if (!this.isManager(user) || !message || typeof message !== 'string') {
                 return;
             }
 
-            switch (message) {
+            switch (message.split(' ')[0]) {
+                case '!hidevote':
                 case '!qsenable':
                     this.enabled = true;
                     break;
 
+                case '!newvote':
+                case '!showvote':
                 case '!qsdisable':
                     this.enabled = false;
                     break;
